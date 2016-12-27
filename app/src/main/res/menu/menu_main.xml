@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="de.weidemeier.alexander.downfall.MainActivity">
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"
+        android:visible="true" />
+
+    <item
+        android:id="@+id/whatsapp_share"
+        android:title="Share"
+        android:icon="@drawable/whatsapp_messenger_icon"
+        android:visible="true"
+        android:enabled="true"
+        android:checkable="false" />
+
+</menu>
