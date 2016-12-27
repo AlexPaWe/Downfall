@@ -12,7 +12,6 @@
     <item
         android:id="@+id/whatsapp_share"
         android:title="Share"
-        android:icon="@drawable/whatsapp_messenger_icon"
         android:visible="true"
         android:enabled="true"
         android:checkable="false" />
