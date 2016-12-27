@@ -22,8 +22,6 @@ public class Snowflake {
     private int posX;
     private int posY;
 
-    private Canvas canvas;
-
 
     public Snowflake(int posX, int posY, double vX, double vY) {
         this.posX = posX;
