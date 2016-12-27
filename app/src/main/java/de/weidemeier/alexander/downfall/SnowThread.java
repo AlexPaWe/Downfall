@@ -42,6 +42,8 @@ public class SnowThread extends Thread {
 
     private boolean started;
 
+    private int dpi;
+
 
     public SnowThread(SurfaceHolder surfaceHolder, Context context) {
         pauseLock = new Object();
@@ -60,6 +62,8 @@ public class SnowThread extends Thread {
         lastTime = System.currentTimeMillis();
 
         started = false;
+
+        dpi = context.getResources().getDisplayMetrics().densityDpi;
     }
 
 
@@ -80,7 +84,7 @@ public class SnowThread extends Thread {
 
             Iterator<Snowflake> iterator = snowflakes.iterator();
             while (iterator.hasNext()) {
-                iterator.next().fall(deltaMS);
+                iterator.next().fall(deltaMS, dpi);
             }
 
             Canvas c = null;

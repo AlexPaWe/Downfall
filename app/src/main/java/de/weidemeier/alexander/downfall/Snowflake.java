@@ -2,6 +2,7 @@ package de.weidemeier.alexander.downfall;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 
 /**
  * Created by thebige on 21.12.16.
@@ -9,16 +10,19 @@ import android.graphics.BitmapFactory;
 
 public class Snowflake {
 
-    public static final double MIN_VERTICAL_VELOCITY = 0.25;
-    public static final double MAX_VERTICAL_VELOCITY = 0.4;
+    //velocities are given in inch/ms
+    public static final double MIN_VERTICAL_VELOCITY = 1.2/1000;
+    public static final double MAX_VERTICAL_VELOCITY = 1.2/1000; //not the real max velocity!
 
-    public static final double MAX_HORIZONTAL_VELOCITY = 0.25;
+    public static final double MAX_HORIZONTAL_VELOCITY = 0/1000;
+
+    private double vX;
+    private double vY;
 
     private int posX;
     private int posY;
 
-    private double vX;
-    private double vY;
+    private Canvas canvas;
 
 
     public Snowflake(int posX, int posY, double vX, double vY) {
@@ -39,9 +43,9 @@ public class Snowflake {
     }
 
 
-    public void fall(long deltaMS) {
-        posX += vX * (deltaMS);
-        posY += vY * (deltaMS);
+    public void fall(long deltaMS, int dpi) {
+        posX += dpi * (vX * deltaMS);
+        posY += dpi * (vY * deltaMS);
     }
 
 
