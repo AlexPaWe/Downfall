@@ -77,7 +77,7 @@ public class SnowThread extends Thread {
 
             if (numberOfSnowflakes < MAX_NUMBER_OF_SNOWFLAKES && Math.random() < 0.75) {
                 Snowflake snowflake =
-                        Snowflake.snowflakeFactory(surfaceHolder.getSurfaceFrame().width());
+                        Snowflake.snowflakeFactory(surfaceHolder.getSurfaceFrame().width(), snowflakeBmp);
                 snowflakes.add(snowflake);
                 numberOfSnowflakes++;
             }
@@ -122,8 +122,7 @@ public class SnowThread extends Thread {
 
             Snowflake snowflake = iterator.next();
             if (isOnCanvas(snowflake)) {
-                canvas.drawBitmap(snowflakeBmp, snowflake.getPosX(), snowflake.getPosY(),
-                        new Paint());
+                snowflake.draw(canvas);
             } else {
                 iterator.remove();
                 numberOfSnowflakes--;
@@ -159,6 +158,18 @@ public class SnowThread extends Thread {
             paused = false;
             pauseLock.notifyAll();
         }
+    }
+
+
+    public boolean hitsSnowflake(float x, float y) {
+        for (Snowflake snowflake : snowflakes) {
+            if ((snowflake.getPosX() - 6 < x && x < snowflake.getPosX() + 6) &&
+                    (snowflake.getPosX() - 6 < x && x < snowflake.getPosX() + 6)) {
+                snowflake.setClicked();
+                return true;
+            }
+        }
+        return false;
     }
 
 

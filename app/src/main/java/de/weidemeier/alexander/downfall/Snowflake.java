@@ -3,6 +3,8 @@ package de.weidemeier.alexander.downfall;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.DrawableWrapper;
 
 /**
  * Created by thebige on 21.12.16.
@@ -19,6 +21,12 @@ public class Snowflake {
     private double vX;
     private double vY;
 
+    private Bitmap snowflakeBmp;
+
+    private String message = "Just a test message!";
+
+    private boolean clicked = false;
+
     private int posX;
     private int posY;
 
@@ -31,19 +39,35 @@ public class Snowflake {
     }
 
 
-    public static Snowflake snowflakeFactory(int width) {
+    public static Snowflake snowflakeFactory(int width, Bitmap snowflakeBmp) {
         int randPosX = (int) (Math.random() * width);
         int randDirection = (Math.random() < 0.5) ? -1 : 1;
         double randVX = (Math.random() * MAX_HORIZONTAL_VELOCITY) * randDirection;
         double randVY = (Math.random() * MAX_VERTICAL_VELOCITY) + MIN_VERTICAL_VELOCITY;
 
-        return new Snowflake(randPosX, 0, randVX, randVY);
+        Snowflake snowflake = new Snowflake(randPosX, 0, randVX, randVY);
+        snowflake.setSnowflakeBmp(snowflakeBmp);
+        return  snowflake;
     }
 
 
     public void fall(long deltaMS, int dpi) {
         posX += dpi * (vX * deltaMS);
         posY += dpi * (vY * deltaMS);
+    }
+
+
+    public void draw(Canvas canvas) {
+        if (!clicked) {
+            canvas.drawBitmap(snowflakeBmp, posX, posY, new Paint());
+        } else {
+            canvas.drawText(message, posX, posY, new Paint());
+        }
+    }
+
+
+    public void setSnowflakeBmp(Bitmap snowflakeBmp) {
+        this.snowflakeBmp = snowflakeBmp;
     }
 
 
@@ -54,5 +78,10 @@ public class Snowflake {
 
     public int getPosY() {
         return posY;
+    }
+
+
+    public void setClicked() {
+        clicked = true;
     }
 }

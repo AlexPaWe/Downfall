@@ -1,7 +1,10 @@
 package de.weidemeier.alexander.downfall;
 
+import android.app.AlertDialog;
+import android.app.Notification;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -11,7 +14,7 @@ import android.view.SurfaceView;
 
 public class SnowDisplay extends SurfaceView implements SurfaceHolder.Callback {
 
-    private SnowThread thread;
+    private SnowThread snowThread;
 
 
     public SnowDisplay(Context context, AttributeSet attributeSet) {
@@ -26,7 +29,7 @@ public class SnowDisplay extends SurfaceView implements SurfaceHolder.Callback {
 
 
     public void setThread(SnowThread snowThread) {
-        this.thread = snowThread;
+        this.snowThread = snowThread;
     }
 
 
@@ -61,5 +64,17 @@ public class SnowDisplay extends SurfaceView implements SurfaceHolder.Callback {
             } catch (InterruptedException e) {
             }
         }*/
+    }
+
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (event.getAction() == MotionEvent.ACTION_DOWN) {
+            //check if click happened on a snowflake
+            if (snowThread.hitsSnowflake(event.getX(), event.getY())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

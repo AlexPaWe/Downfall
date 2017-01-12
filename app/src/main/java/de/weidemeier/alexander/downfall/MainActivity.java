@@ -36,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
         snowThread = new SnowThread(snowDisplay.getHolder(), this);
 
+        snowDisplay.setThread(snowThread);
+
         button = (Button) findViewById(R.id.button_start_pause);
     }
 
