@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.view.SurfaceHolder;
 import android.widget.TextView;
 
+import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -161,7 +162,7 @@ public class SnowThread extends Thread {
     }
 
 
-    public boolean hitsSnowflake(float x, float y) {
+    public boolean hitsSnowflake(float x, float y) throws ConcurrentModificationException {
         for (Snowflake snowflake : snowflakes) {
             if ((snowflake.getPosX() - 6 < x && x < snowflake.getPosX() + 6) &&
                     (snowflake.getPosX() - 6 < x && x < snowflake.getPosX() + 6)) {

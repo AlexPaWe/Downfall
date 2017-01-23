@@ -16,7 +16,7 @@ public class Snowflake {
     public static final double MIN_VERTICAL_VELOCITY = 1.2/1000;
     public static final double MAX_VERTICAL_VELOCITY = 1.2/1000; //not the real max velocity!
 
-    public static final double MAX_HORIZONTAL_VELOCITY = 0/1000;
+    public static final double MAX_HORIZONTAL_VELOCITY = 0.6/1000;
 
     private double vX;
     private double vY;

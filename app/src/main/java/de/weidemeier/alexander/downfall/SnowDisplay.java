@@ -8,6 +8,8 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ConcurrentModificationException;
+
 /**
  * Created by thebige on 20.12.16.
  */
@@ -70,10 +72,24 @@ public class SnowDisplay extends SurfaceView implements SurfaceHolder.Callback {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            //check if click happened on a snowflake
-            if (snowThread.hitsSnowflake(event.getX(), event.getY())) {
-                return true;
+
+            boolean paused = snowThread.isPaused();
+
+            //pause the snow thread just for the fun of it
+            if (!paused) snowThread.onPause();
+
+            try {
+                //check if click happened on a snowflake
+                snowThread.hitsSnowflake(event.getX(), event.getY());
+            } catch (ConcurrentModificationException e) {
+                //do nothing. Always look on the bright side of life.
             }
+
+
+            //resume the snow thread because the show must go on ;)
+            if (!paused) snowThread.onResume();
+
+            return true;
         }
         return false;
     }
