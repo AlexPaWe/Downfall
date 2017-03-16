@@ -46,6 +46,11 @@ public class SnowThread extends Thread {
     private int dpi;
 
 
+    //determines if the fps' are locked.
+    //Default: false
+    private boolean fpsLock = false;
+
+
     public SnowThread(SurfaceHolder surfaceHolder, Context context) {
         pauseLock = new Object();
 
@@ -103,6 +108,21 @@ public class SnowThread extends Thread {
                     }
                 }
             }
+
+
+            if (fpsLock) {
+                //the following code limits the fps to a maximum of about 30fps
+                long computingTime = System.currentTimeMillis() - lastTime;
+                if (computingTime < 33) {
+                    long waitTime = 33 - computingTime;
+                    try {
+                        Thread.sleep(waitTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
         }
     }
 
@@ -129,6 +149,24 @@ public class SnowThread extends Thread {
                 numberOfSnowflakes--;
             }
         }
+    }
+
+
+    /**
+     * Setter method for the fps lock. En-/Disables the fps lock.
+     * @param value - true if fps' should be locked.
+     */
+    public void setFpsLock(boolean value) {
+        fpsLock = value;
+    }
+
+
+    /**
+     * Getter method for the status of the fps lock
+     * @return true if the fps' are locked.
+     */
+    public boolean getFpsLock() {
+        return fpsLock;
     }
 
 

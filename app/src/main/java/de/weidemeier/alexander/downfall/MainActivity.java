@@ -1,7 +1,10 @@
 package de.weidemeier.alexander.downfall;
 
+import android.content.ClipData;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -11,6 +14,10 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,7 +68,15 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        //currently disabled.
         if (id == R.id.whatsapp_share) {
+            //makesaveScreenshot();
+            return true;
+        }
+
+        if (id == R.id.fps_lock) {
+            snowThread.setFpsLock((snowThread.getFpsLock())? false : true);
+            item.setChecked((snowThread.getFpsLock())? true : false);
             return true;
         }
 
@@ -85,6 +100,31 @@ public class MainActivity extends AppCompatActivity {
         } else {
             snowThread.onPause();
             button.setText("Resume");
+        }
+    }
+
+
+    public void makesaveScreenshot() {
+        Date now = new Date();
+        android.text.format.DateFormat.format("yyyy-MM-dd_hh:mm:ss", now);
+
+        try {
+            String mPath = Environment.getExternalStorageDirectory().toString() + "/" + now +
+                    ".jpeg";
+            snowDisplay.setDrawingCacheEnabled(true);
+            Bitmap bmp = Bitmap.createBitmap(snowDisplay.getDrawingCache());
+            snowDisplay.setDrawingCacheEnabled(false);
+
+            File imageFile = new File(mPath);
+
+            FileOutputStream outputStream = new FileOutputStream(imageFile);
+            int quality = 100;
+            bmp.compress(Bitmap.CompressFormat.JPEG, quality, outputStream);
+            outputStream.flush();
+            outputStream.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

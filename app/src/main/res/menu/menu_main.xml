@@ -16,4 +16,11 @@
         android:enabled="true"
         android:checkable="false" />
 
+    <item
+        android:id="@+id/fps_lock"
+        android:title="lock FPS"
+        android:visible="true"
+        android:checkable="true"
+        android:enabled="true" />
+
 </menu>
