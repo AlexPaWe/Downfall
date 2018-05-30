@@ -35,6 +35,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        
+        // TODO get number of cores
+        // TODO create multiple snowThreads
+        // and place them in a list
 
         snowDisplay = (SnowDisplay) findViewById(R.id.display);
         SurfaceHolder holder = snowDisplay.getHolder();
@@ -91,6 +95,8 @@ public class MainActivity extends AppCompatActivity {
         String infTxt = holder.getSurfaceFrame().width() + ":" + holder.getSurfaceFrame().height();
         informationView.setText(infTxt);
 
+        // TODO Modify, so all threads are started, paused or resumed
+        
         if (!snowThread.isStarted()) {
             snowThread.start();
             button.setText("Pause");
@@ -129,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    // TODO make it parallel
     @Override
     public void onPause() {
         super.onPause();
@@ -142,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // TODO kill all snowThreads
         snowThread.kill();
         try {
             snowThread.join();
