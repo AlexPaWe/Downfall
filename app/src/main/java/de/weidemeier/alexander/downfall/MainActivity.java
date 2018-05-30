@@ -23,7 +23,8 @@ public class MainActivity extends AppCompatActivity {
 
     private SnowDisplay snowDisplay;
 
-    private SnowThread snowThread;
+    private SnowThread snowThread; // TODO replace with following:
+    /* private SnowThread[] snowThreads; */
 
     private TextView informationView;
 
